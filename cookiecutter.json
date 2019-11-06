@@ -10,7 +10,7 @@
     "algorithm_description_en_US": "Algorithm Description",
     "algorithm_description_pt_BR": "Descrição do Algoritmo",
     "luigi_workers": "4",
-    "online_docker_image": "totvslabs/pycarol",
+    "online_docker_image": "totvslabs/pyCarol:2.24.0",
     "online_instance_memory" : "1024",
     "online_instance_disk_size" : "8G",
     "online_instance_vCPUs" : "300",
