@@ -1,4 +1,4 @@
-FROM pyCarol:2.18.0
+FROM pyCarol:2.24.0
 
 # install common utilities
 
