@@ -3,7 +3,7 @@
     "processes": [
       {
         "name": "{{cookiecutter.project_slug}}",
-        "algorithmName": "{{cookiecutter.project_slug}}.py",
+        "algorithmName": "{{cookiecutter.project_slug}}",
         "namespace": "",
         "algorithmTitle": {
           "en-US": "{{cookiecutter.algorithm_description_en_US}}",
@@ -16,7 +16,7 @@
         "instanceProperties": {
           "profile": "",
           "properties": {
-            "dockerImage": "{{cookiecutter.online_docker_image}}",
+            "dockerImage": "{{cookiecutter.carol_app_docker_image}}:{{cookiecutter.docker_image_version}}",
             "instanceMemory": "{{cookiecutter.online_instance_memory}}",
             "instanceSize": "{{cookiecutter.online_instance_disk_size}}",
             "instanceVCPUs": "{{cookiecutter.online_instance_vCPUs}}"
