@@ -4,7 +4,7 @@ from distutils.core import setup
 setup(
     name='cookiecutter-carol-app',
     packages=[],
-    version='0.0.1',
+    version='0.2.0',
     description='Cookiecutter template for a Carol Online App',
     author='TotvsLabs',
     license='UNKNOWN',
