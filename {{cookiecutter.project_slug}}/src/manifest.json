@@ -17,9 +17,7 @@
           "profile": "",
           "properties": {
             "dockerImage": "{{cookiecutter.carol_app_docker_image}}:{{cookiecutter.docker_image_version}}",
-            "instanceMemory": "{{cookiecutter.online_instance_memory}}",
-            "instanceSize": "{{cookiecutter.online_instance_disk_size}}",
-            "instanceVCPUs": "{{cookiecutter.online_instance_vCPUs}}"
+            "flavor": "{{cookiecutter.carol_app_machine_types}}"
           },
           "environments": {
             "EXAMPLE_ENV_1": "value_1",
