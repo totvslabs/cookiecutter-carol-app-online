@@ -1,6 +1,7 @@
 PYLINT = flake8
 PYLINTFLAGS = -rn
 PYTHONFILES := $(wildcard *.py)
+SRCFOLDER = src
 
 ifeq ($(OS),Windows_NT)
 	OPEN := start
@@ -24,7 +25,7 @@ init: ## Install all package dependencies
 	pip install -r requirements.txt
 
 test: ## Runs all project test suite, recording all test converage data
-	pytest --cov=src tests/
+	PYTHONPATH=${PWD}/${SRCFOLDER}:${PYTHONPATH} pytest --cov=${SRCFOLDER}/ tests/
 
 coverage: ## Create XML and HTML Test coverare report.
 	coverage xml -o coverage-reports/coverage.xml
@@ -47,15 +48,15 @@ docs: ## Compile all package documentation in HTML format
 {%- if cookiecutter.sonarqube %}
 code_scan: ## Execute a Code Qualiry scan and send the data to SonarQube server
 	@echo "~~~ Code Quality Scan"
-	sonar-scanner -Dsonar.projectKey={{cookiecutter.project_slug}} -Dsonar.sources=. -Dsonar.host.url=${SONAR_URL} -Dsonar.login=${SONAR_TOKEN} -Dsonar.branch.name=${BUILDKITE_BRANCH} -Dsonar.python.coverage.reportPaths="coverage-reports/coverage.xml"
+	sonar-scanner -Dsonar.projectKey={{cookiecutter.project_slug}}-{{cookiecutter.algorithm_name}} -Dsonar.sources=${SRCFOLDER} -Dsonar.host.url=${SONAR_URL} -Dsonar.login=${SONAR_TOKEN} -Dsonar.branch.name=${BUILDKITE_BRANCH} -Dsonar.python.coverage.reportPaths="coverage-reports/coverage.xml"
 {%- endif %}
 
 lint: ## Lint all code for best practicies
-	flake8 ./src ./tests
+	flake8 ./${SRCFOLDER} ./tests
 
 run: ## Runs the online app locally on http://localhost:5000
-	# PYTHONUNBUFFERED=1 && FLASK_DEBUG=1 && gunicorn -w 1 -b :5000 carol_nlp_engine.nlp_api:application
-	PYTHONUNBUFFERED=1 FLASK_DEBUG=1 FLASK_ENV=development python src/{{cookiecutter.project_slug}}.py
+	# PYTHONPATH=${PWD}/${SRCFOLDER}:${PYTHONPATH} PYTHONUNBUFFERED=1 FLASK_DEBUG=1 gunicorn -w 1 -b :5000 ${SRCFOLDER}.{{cookiecutter.algorithm_name}}:application
+	PYTHONPATH=${PWD}/${SRCFOLDER}:${PYTHONPATH} PYTHONUNBUFFERED=1 FLASK_DEBUG=1 FLASK_ENV=development python ${SRCFOLDER}/{{cookiecutter.algorithm_name}}.py
 
 build_ci: ## Build CI Docker Image
 	docker build -f docker/ci_image/Dockerfile -t ci_image .
@@ -69,6 +70,15 @@ all_tests: tests coverage code_scan ## Runs all test related tasks
 dist: clean ## Create the dist file to deploy on Carol
 	@mkdir dist
 	@mkdir dist/ai-script
-	@cp src/* dist/ai-script
-	@cp requirements.txt dist/ai-script
+	@cp ${SRCFOLDER}/manifest.json dist/ai-script
 	@cd dist && zip -r {{cookiecutter.project_slug}}.zip ai-script/*
+
+docker_image: ## Build {{ cookiecutter.project_slug }}-{{ cookiecutter.algorithm_name }} Carol app docker image
+	@docker build -t {{ cookiecutter.project_slug }}-{{ cookiecutter.algorithm_name }} .
+
+docker_run: ## Runs {{ cookiecutter.project_slug }}-{{ cookiecutter.algorithm_name }} Carol app docker image
+	@docker run --rm -it -p 5000:5000 {{ cookiecutter.project_slug }}-{{ cookiecutter.algorithm_name }}
+
+docker_run_dev: ## Runs {{ cookiecutter.project_slug }}-{{ cookiecutter.algorithm_name }} Carol app docker image in Development mode using local code
+	@docker run --rm -it --env PYTHONUNBUFFERED=1 --env FLASK_DEBUG=1 --env FLASK_ENV=development -p 127.0.0.1:5000:5000 -v ${PWD}/${SRCFOLDER}:/app {{ cookiecutter.project_slug }}-{{ cookiecutter.algorithm_name }} python {{ cookiecutter.algorithm_name }}.py
+
