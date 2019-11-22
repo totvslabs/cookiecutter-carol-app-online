@@ -76,20 +76,20 @@ def test_bake_with_defaults(cookies):
 
         found_toplevel_files = [f.basename for f in result.project.listdir()]
         assert 'README.md' in found_toplevel_files
-        assert 'ai-script' in found_toplevel_files
+        assert 'src' in found_toplevel_files
 
 def test_bake_with_defaults_online(cookies):
     with bake_in_temp_dir(cookies) as result:
         assert result.exception is None
         assert result.exit_code == 0
         project_path, project_slug, project_dir = project_info(result)
-        manifest_file_path = f"{result.project}/ai-script/manifest.json"
+        manifest_file_path = f"{result.project}/src/manifest.json"
         with open(manifest_file_path, 'r') as manifest_file:
             manifest = manifest_file.read()
             assert '"online": {' in manifest
-            assert f'"algorithmName": "{project_slug}.py"' in manifest
+            assert f'"algorithmName": "alg_carol_app_boilerplate"' in manifest
             assert f'"name": "{project_slug}"' in manifest
-        api_file_path = f"{result.project}/ai-script/{project_slug}.py"
+        api_file_path = f"{result.project}/src/alg_carol_app_boilerplate.py"
         with open(api_file_path, 'r') as api_file:
             api = api_file.read()
-            assert f"flask = OnlineApi('{project_slug}').get_api()" in api
+            assert f"application = OnlineApi('alg_carol_app_boilerplate').get_api()" in api

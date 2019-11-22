@@ -1,45 +1,43 @@
-Preparing the environment to run the application locally
----
+# {{ cookiecutter.project_name }}
 
-No special preparation is needed.
+{{ cookiecutter.project_short_description }}
 
+## Preparing the environment to run the application locally
 
-Running the application locally
----
+* Check if your are running Python 3.6+ ``python --version``
+* Install a virtualenv by running ``make venv``
+* Activate your new Python Virtual Env: ``source .venv/bin/activate``
+* Install all development required libs using: ``make dev``
 
-On the Python file with the endpoints (the one on the manifest file), uncomment the next line:
+## Running the application locally
 
+You can run the {{ cookiecutter.project_name }} Carol App in two ways
+
+```shell
+make run
 ```
-flask = OnlineApi('run_me').get_api()
-```
 
-The previous line is pointing the Python file that has the services.
+Or your can use {{ cookiecutter.project_name }} Carol App docker image to run your code locally
 
-After, run the following command to start the server:
-
-```
-gunicorn -w 1 -b :5000 run_me:flask
+```shell
+make docker_image
+make docker_run_dev
 ```
 
 These endpoints will be available for all Online Carol App:
 
-```
-http://localhost:5000/statusz
-http://localhost:5000/logs
-http://localhost:5000/healthz
-```
+<http://localhost:5000/statusz>
+<http://localhost:5000/logs>
+<http://localhost:5000/healthz>
 
 Based on provided sample, these URLs will be available:
 
-```
-http://localhost:5000/api/hello_world
-http://localhost:5000/api/predict
-http://localhost:5000/api/sum?a=1&b=2
-```
+<http://localhost:5000/api/hello_world>
+<http://localhost:5000/api/sum?a=1&b=2>
 
 Example how to call the endpoint `sum` (curl):
 
-```
+```shell
 curl -X POST \
   http://localhost:5000/api/sum \
   -H 'cache-control: no-cache' \
@@ -48,43 +46,66 @@ curl -X POST \
   -d '{"a":"1","b":"2"}'
 ```
 
-Running the application in Carol
----
+## Testing
+
+This Carol App contains all libraries necessary to create and run tests.
+
+All tests have to be hosted on test/ folder.
+
+To run your test suite:
+
+```shell
+make test
+```
+
+To check the Carol App Test coverage:
+
+```shell
+make htmlcov
+```
+
+## CI/CD
+
+This Carol App is ready to run in any [Buildkite](https://buildkite.com) pipeline. Check the [.buildkite/pipeline.yml](.buildkite/pipeline.yml)
+
+## Running the application in Carol
 
 You should create a Carol App and send the resource to Carol.
 
 After deployed the Carol App and started the service, the final URL will follow this structure:
 
-```
-http://wssp-sixthonlinecarolapp-1-0-0-sample/api/
-```
+<http://wssp-{{ cookiecutter.project_slug }}-{{ cookiecutter.version.replace('.', '-') }}-{{cookiecutter.algorithm_name}}/api/>
 
-Understanding the Carol App's URL in Carol
----
+### Understanding the Carol App's URL in Carol
 
-- `wssp`: Tenant name.
-- `sixthonlinecarolapp`: Carol app name.
-- `1-0-0`: Carol app version. At the domain itt replaces `.` by `-`. On the path it keeps the `-`.
-- `sample`: Algorithm name.
-- `api`: Fixed string, used to group the services provided by this carol app.
+* `wssp`: Tenant name.
+* `{{ cookiecutter.project_slug }}`: Carol app name.
+* `{{ cookiecutter.version.replace('.', '-') }}`: Carol app version. At the domain itt replaces `.` by `-`. On the path it keeps the `-`.
+* `{{ cookiecutter.algorithm_name }}`: Algorithm name.
+* `api`: Fixed string, used to group the services provided by this carol app.
 
 Ps.: in the near future, all requests will go through Carol (working as a proxy from external requests and the Carol App).
 
-
-Additional information
----
+## Additional information
 
 All Online Carol App is being deployed on Google Cloud Platform.
 
-If you want to migrate to a different pyCarol version, change the docker image:
+Both Carol App (Online/Batch) need [pyCarol](https://github.com/totvslabs/pyCarol).
+Python 3 is required for both Carol App (Online/Batch).
 
-- `ai/nlp_spacy:2.6.0`: it has the pyCarol version 2.6.
-- `ai/nlp_spacy:2.4-online-request`: it has the pyCarol version 2.4 (`we are still making this docker image stable - use the previous one for now`).
+To change the pyCarol version to use, change the requirements.txt file and the Dockerfile.
 
-Both Carol App (Online/Batch) need pyCarol (https://github.com/totvslabs/pyCarol).
-Python 3.6 is required for both Carol App (Online/Batch).
-
-Questions?
----
+## Questions
 
 Send a message on `#carol-feedback` on Slack.
+
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Important, make sure to update tests as appropriate.
+
+## License
+
+[Proprietary](LICENSE)

@@ -15,25 +15,18 @@ def hello_world():
     }
     return message
 
-@online.route("predict")
-def predict():
-    result = {
-        'score': random.randint(1,9)
-    }
-    return result
-
 @online.route("sum")
 def sum():
     total = 0;
     print(request)
 
-    param = request
+    param = request.json
 
     if(param != None):
         for key in param:
             try:
                 total += float(param[key])
-            except RuntimeError:
+            except Exception:
                 pass
 
     result = {
@@ -42,14 +35,14 @@ def sum():
     return result
 
 
-flask = OnlineApi('carol_app_boilerplate').get_api()
+application = OnlineApi('{{cookiecutter.algorithm_name}}').get_api()
 
 
 def main():
     """Runs from command prompt
     """
     if __name__ == "__main__":
-        flask.run(debug=True)
+        application.run(debug=True, host='0.0.0.0')
 
 
 main()
