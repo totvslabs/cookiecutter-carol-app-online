@@ -38,7 +38,7 @@ Then:
 * Activate your new Python Virtual Env: ``source .venv/bin/activate``
 * Install all development required libs using: ``make dev``
 
-Just run ``make`` to see all options you have.
+Just run ``make help`` to see all options you have.
 
 Submit a Pull Request
 ~~~~~~~~~~~~~~~~~~~~~~~~
