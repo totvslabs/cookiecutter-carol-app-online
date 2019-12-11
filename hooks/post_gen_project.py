@@ -39,5 +39,7 @@ def post_ga_data():
 
 post_ga_data()
 
+print("{{ cookiecutter.project_name }} created successfully.")
+
 if __name__ == '__main__':
     pass
