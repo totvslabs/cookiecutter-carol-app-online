@@ -19,14 +19,16 @@ def post_ga_data():
         'ec': 'carol_cookiecuter',
         'ea': 'new_online_project',
         'el': 'carol_online_app',
-        'cd1': 'tenant',
-        'cm1': '{{ cookiecutter.carol_app_tenant }}',
+        'cd1': 'carol_environment',
+        'cm1': '{{ cookiecutter.carol_app_organization }}',
         'cd2': 'project',
         'cm2': '{{ cookiecutter.project_name }}',
         'cd3': 'os',
         'cm3': platform.system(),
         'cd4': 'python_version',
-        'cm4': platform.python_version()
+        'cm4': platform.python_version(),
+        'cd5': 'carol_organization',
+        'cm5': '{{ cookiecutter.carol_app_environment }}'
     })
 
     try:

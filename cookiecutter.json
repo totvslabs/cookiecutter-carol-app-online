@@ -1,5 +1,5 @@
 {
-    "full_name": "TotvsLabs",
+    "full_name": "Totvs Labs",
     "email": "info@totvslabs.com",
     "github_username": "totvslabs",
     "project_name": "Carol App Boilerplate",
@@ -7,11 +7,12 @@
     "project_short_description": "Carol App Boilerplate contains all the boilerplate you need to create a Carol App.",
     "version": "0.1.0",
     "sonarqube": true,
-    "carol_app_tenant": "newapp",
+    "carol_app_organization": "my_organization",
+    "carol_app_environment": "my_environment",
     "algorithm_name": "alg_{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
     "algorithm_description_en_US": "Algorithm Description",
     "algorithm_description_pt_BR": "Descrição do Algoritmo",
-    "carol_app_docker_image": "carol/{{ cookiecutter.project_slug }}",
+    "carol_app_docker_image": "carol/{{ cookiecutter.project_slug }}:{{cookiecutter.version}}",
     "pycarol_version": "latest",
     "carol_app_machine_types": [
         "c1.nano",
