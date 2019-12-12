@@ -7,14 +7,12 @@
         "namespace": "",
         "algorithmTitle": {
           "en-US": "{{cookiecutter.algorithm_description_en_US}}",
-          "pt-BR": "{{cookiecutter.algorithm_description_pt_BR}}",
-          "pt-br": "{{cookiecutter.algorithm_description_pt_BR}}"
+          "pt-BR": "{{cookiecutter.algorithm_description_pt_BR}}"
         },
         "algorithmDescription": {
           "en-US": "{{cookiecutter.project_short_description}}"
         },
         "instanceProperties": {
-          "profile": "",
           "properties": {
             "dockerImage": "{{cookiecutter.carol_app_docker_image}}:latest",
             "flavor": "{{cookiecutter.carol_app_machine_types}}"
