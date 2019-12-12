@@ -35,7 +35,7 @@ def sum():
     return result
 
 
-application = OnlineApi('{{cookiecutter.algorithm_name}}').get_api()
+application = OnlineApi('{{cookiecutter.algorithm_name}}', '{{cookiecutter.project_slug}}.').get_api()
 
 
 def main():
