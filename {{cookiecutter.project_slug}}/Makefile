@@ -2,6 +2,7 @@ PYLINT = flake8
 PYLINTFLAGS = -rn
 PYTHONFILES := $(wildcard *.py)
 SRCFOLDER = {{cookiecutter.project_slug}}
+DOCKER_TAG = {{cookiecutter.project_slug}}-{{cookiecutter.algorithm_name}}:{{cookiecutter.version}}
 
 ifeq ($(OS),Windows_NT)
 	OPEN := start
@@ -73,12 +74,12 @@ dist: clean ## Create the dist file to deploy on Carol
 	@cp ${SRCFOLDER}/manifest.json dist/ai-script
 	@cd dist && zip -r {{cookiecutter.project_slug}}.zip ai-script/*
 
-docker_image: ## Build {{ cookiecutter.project_slug }}-{{ cookiecutter.algorithm_name }} Carol app docker image
-	@docker build -t {{ cookiecutter.project_slug }}-{{ cookiecutter.algorithm_name }} .
+docker_image: ## Build {{cookiecutter.project_slug}}-{{cookiecutter.algorithm_name}}:{{cookiecutter.version}} Carol app docker image
+	@docker build -t {{cookiecutter.project_slug}}-{{cookiecutter.algorithm_name}}:{{cookiecutter.version}} .
 
-docker_run: ## Runs {{ cookiecutter.project_slug }}-{{ cookiecutter.algorithm_name }} Carol app docker image
-	@docker run --rm -it -p 5000:5000 {{ cookiecutter.project_slug }}-{{ cookiecutter.algorithm_name }}
+docker_run: ## Runs {{cookiecutter.project_slug}}-{{cookiecutter.algorithm_name}}:{{cookiecutter.version}} Carol app docker image
+	@docker run --rm -it -p 5000:5000 {{cookiecutter.project_slug}}-{{cookiecutter.algorithm_name}}:{{cookiecutter.version}}
 
-docker_run_dev: ## Runs {{ cookiecutter.project_slug }}-{{ cookiecutter.algorithm_name }} Carol app docker image in Development mode using local code
-	@docker run --rm -it --env PYTHONPATH=. --env PYTHONUNBUFFERED=1 --env FLASK_DEBUG=1 --env FLASK_ENV=development -p 127.0.0.1:5000:5000 -v ${PWD}:/app {{ cookiecutter.project_slug }}-{{ cookiecutter.algorithm_name }} python {{ cookiecutter.project_slug }}/{{ cookiecutter.algorithm_name }}.py
+docker_run_dev: ## Runs {{cookiecutter.project_slug}}-{{cookiecutter.algorithm_name}}:{{cookiecutter.version}} Carol app docker image in Development mode using local code
+	@docker run --rm -it --env PYTHONPATH=. --env PYTHONUNBUFFERED=1 --env FLASK_DEBUG=1 --env FLASK_ENV=development -p 127.0.0.1:5000:5000 -v ${PWD}:/app {{cookiecutter.project_slug}}-{{cookiecutter.algorithm_name}}:{{cookiecutter.version}} python {{ cookiecutter.project_slug }}/{{ cookiecutter.algorithm_name }}.py
 
