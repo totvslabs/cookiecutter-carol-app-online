@@ -2,7 +2,7 @@ PYLINT = flake8
 PYLINTFLAGS = -rn
 PYTHONFILES := $(wildcard *.py)
 SRCFOLDER = {{cookiecutter.project_slug}}
-DOCKER_TAG = {{cookiecutter.project_slug}}-{{cookiecutter.algorithm_name}}:{{cookiecutter.version}}
+DOCKER_TAG = {{cookiecutter.project_slug}}:{{cookiecutter.version}}
 
 ifeq ($(OS),Windows_NT)
 	OPEN := start
