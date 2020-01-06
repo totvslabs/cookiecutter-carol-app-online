@@ -3,6 +3,7 @@ import http.client
 import os
 import platform
 import urllib.parse
+import uuid
 
 PROJECT_DIRECTORY = os.path.realpath(os.path.curdir)
 
@@ -14,11 +15,12 @@ def post_ga_data():
     params = urllib.parse.urlencode({
         'v': 1,
         'tid': 'UA-144583662-1',
-        'uid': '{{ cookiecutter.email }}',
+        'uid': '{{ cookiecutter.github_username }}',
         't' : 'event',
         'ec': 'carol_cookiecuter',
         'ea': 'new_online_project',
         'el': 'carol_online_app',
+        'cid': uuid.uuid1(),
         'cd1': 'carol_environment',
         'cm1': '{{ cookiecutter.carol_app_organization }}',
         'cd2': 'project',
@@ -30,6 +32,8 @@ def post_ga_data():
         'cd5': 'carol_organization',
         'cm5': '{{ cookiecutter.carol_app_environment }}'
     })
+
+    print(params)
 
     try:
         connection = http.client.HTTPConnection('www.google-analytics.com')
