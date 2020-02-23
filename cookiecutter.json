@@ -13,7 +13,7 @@
     "algorithm_description_en_US": "Algorithm Description",
     "algorithm_description_pt_BR": "Descrição do Algoritmo",
     "carol_app_docker_image": "carol/{{ cookiecutter.project_slug }}:{{cookiecutter.version}}",
-    "pycarol_version": "latest",
+    "pycarol_version": "2.30.0",
     "carol_app_machine_types": [
         "c1.nano",
         "c1.micro",
