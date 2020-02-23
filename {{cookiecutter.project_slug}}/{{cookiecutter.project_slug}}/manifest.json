@@ -14,7 +14,7 @@
         },
         "instanceProperties": {
           "properties": {
-            "dockerImage": "{{cookiecutter.carol_app_docker_image}}:latest",
+            "dockerImage": "{{cookiecutter.carol_app_docker_image}}",
             "flavor": "{{cookiecutter.carol_app_machine_types}}"
           }
         }
