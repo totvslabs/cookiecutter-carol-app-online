@@ -6,12 +6,12 @@ FROM totvslabs/pycarol:{{ cookiecutter.pycarol_version }}
 
 env SRCFOLDER={{cookiecutter.project_slug}}
 
+RUN pip install -r requirements.txt && \
+  pip install gunicorn
+
 WORKDIR /app
 ADD requirements.txt /app/
 ADD {{cookiecutter.project_slug}}/ /app/{{cookiecutter.project_slug}}/
-
-RUN pip install -r requirements.txt && \
-  pip install gunicorn
 
 EXPOSE 5000
 
